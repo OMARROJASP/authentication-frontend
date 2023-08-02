@@ -11,7 +11,7 @@
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
   </div>
  
-  <button type="submit" class="btn btn-primary mt-2">Submit</button>
+  <button type="submit" class="btn btn-primary mt-2" @click.prevent="authUser">Submit</button>
 
 </form>
 
@@ -20,9 +20,25 @@
 
 <script setup>
 import { ref } from 'vue';
+import {AuthService} from '../services/AuthService.js'
 
 const email = ref("");
 const password = ref("");
+
+
+
+const authUser = async()=> {
+    const auth = new AuthService();
+    const success =  await auth.login(email.value, password.value)
+console.log(success)
+    if(success){
+        alert("Exito!")
+    }else{
+        alert("login incorrecto")
+    }
+}
+
+
 </script>
 
 <style lang="scss" scoped>
